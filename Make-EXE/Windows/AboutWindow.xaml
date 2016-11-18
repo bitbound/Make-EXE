@@ -1,0 +1,32 @@
+﻿<Window x:Class="Make_EXE.Windows.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Make_EXE.Windows"
+        mc:Ignorable="d"
+        Title="About Make EXE" Height="275" Width="300">
+    <Grid Margin="10">
+        <TextBlock Text="Make EXE" FontWeight="Bold" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0">
+            <TextBlock Text="Version "></TextBlock>
+            <TextBlock Text="{Binding Version, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AboutWindow}}}"></TextBlock>
+        </TextBlock>
+        <TextBlock Margin="0,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
+            <TextBlock>Translucency (</TextBlock>
+            <Hyperlink Click="Hyperlink_Click">https://translucency.info</Hyperlink>
+            <TextBlock>)</TextBlock>
+        </TextBlock>
+        <Border Margin="0,67,0,35" BorderBrush="DimGray" BorderThickness="1">
+            <ScrollViewer>
+                <TextBlock TextWrapping="Wrap">
+                    <Run Text="This app helps you easily create an EXE from a PowerShell script file.  It adds 'Make EXE' as an option when right-clicking a PowerShell file in Windows Explorer."></Run>
+                    <LineBreak></LineBreak>
+                    <LineBreak></LineBreak>
+                    <Run Text="Third-party libraries used: Fody/Costura"></Run>
+                </TextBlock>
+            </ScrollViewer>
+        </Border>
+        <Button Name="buttonOK" Content="OK" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="60" Height="30" IsCancel="True" IsDefault="True" Click="buttonOK_Click"/>
+    </Grid>
+</Window>

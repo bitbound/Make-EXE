@@ -1,0 +1,19 @@
+﻿<Window x:Class="Make_EXE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Make_EXE"
+        mc:Ignorable="d"
+        Title="Make EXE" Height="250" Width="300" Loaded="Window_Loaded" Icon="BuildSolution.ico">
+    <Grid Background="Black">
+        <TextBlock Foreground="White" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25">Make EXE</TextBlock>
+        <Button Name="buttonInfo" Background="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" Cursor="Hand" ToolTip="Info" Click="buttonInfo_Click" BorderBrush="{x:Null}">
+            <Image Source="Assets/StatusHelp_grey_32xLG.png" Height="20" Width="20"></Image>
+        </Button>
+        <StackPanel x:Name="stackInstall" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="buttonInstall" Margin="0,10,0,10" Click="buttonInstall_Click" Content="Install" Width="60" Height="25"/>
+            <Button x:Name="buttonRemove" Margin="0,10,0,10" Click="buttonRemove_Click" Content="Remove" Width="60" Height="25"/>
+        </StackPanel>
+    </Grid>
+</Window>
