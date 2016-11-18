@@ -41,7 +41,7 @@ namespace Make_EXE
                 }
             }
             Console.WriteLine("Starting up...");
-            System.Diagnostics.Process.Start("powershell.exe", "-file \"" + workingDir + resources[0] + "\"");
+            System.Diagnostics.Process.Start("powershell.exe", "-executionpolicy bypass -file \"" + workingDir + resources[0] + "\"");
         }
     }
 }
