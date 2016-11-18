@@ -12,3 +12,6 @@ Easily compile your PowerShell scripts into EXEs and embed data files (C# WPF).
 When compiling a PS1 to EXE, you'll be asked if you want to embed files into the EXE.  This will allow you to include data files and other resources that your PowerShell script calls.
 
 If you select yes, all files in the same directory as the PS1 file will be included (no subdirectories).  When the EXE is run, the embedded files will be availabe.  Your script must call these files from the current working directory.  Do not change your working directory within the script if you wish to call these files afterward.
+
+### Icons:
+You can set a custom icon for your EXE by putting the ICO file in the same directory as your script and choosing yes to embed files.  Make sure there aren't other files in the script's directory if you don't want to embed them!
