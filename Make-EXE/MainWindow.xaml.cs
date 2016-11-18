@@ -75,12 +75,16 @@ namespace Make_EXE
                 compilerParams.ReferencedAssemblies.Add("System.Xml.Linq.dll");
                 compilerParams.GenerateExecutable = true;
                 compilerParams.OutputAssembly = Path.GetDirectoryName(args[1]) + @"\" + Path.GetFileNameWithoutExtension(args[1]) + ".exe";
-                MessageBox.Show("Building EXE at " + compilerParams.OutputAssembly, "Building File", MessageBoxButton.OK, MessageBoxImage.Information);
+                
                 compilerParams.EmbeddedResources.Add(args[1]);
                 if (ask == MessageBoxResult.Yes)
                 {
                     foreach (var file in Directory.GetFiles(Path.GetDirectoryName(args[1])).Where(strPath => strPath != args[1]))
                     {
+                        if (Path.GetExtension(file) == ".ico")
+                        {
+                            compilerParams.CompilerOptions = @"/win32icon:" + file;
+                        }
                         compilerParams.EmbeddedResources.Add(Path.GetFileName(file));
                     }
                 }
@@ -99,7 +103,7 @@ namespace Make_EXE
                 }
                 else
                 {
-                    MessageBox.Show("Your EXE has been compiled!", "EXE Compiled", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Your EXE has been compiled!  Location: " + compilerParams.OutputAssembly, "EXE Compiled", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 this.Close();
             }
