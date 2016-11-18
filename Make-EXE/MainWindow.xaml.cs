@@ -109,16 +109,7 @@ namespace Make_EXE
             }
             else
             {
-                var isInstalled = false;
-                var psKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(".ps1");
-                if (psKey.GetSubKeyNames().Contains("shell"))
-                {
-                    if (psKey.OpenSubKey("shell").GetSubKeyNames().Contains("MakeEXE"))
-                    {
-                        isInstalled = true;
-                    }
-                }
-                if (File.Exists(installedPath) && isInstalled)
+                if (File.Exists(installedPath))
                 {
                     buttonInstall.IsEnabled = false;
                     buttonRemove.IsEnabled = true;
@@ -155,7 +146,7 @@ namespace Make_EXE
         private void buttonRemove_Click(Object sender, RoutedEventArgs e)
         {
             Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE", true);
-            var psi = new ProcessStartInfo("reg.exe", @"delete HKCR\.ps1\shell\MakeEXE /f");
+            var psi = new ProcessStartInfo("cmd.exe", @"/c reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f");
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";
             var proc = Process.Start(psi);
