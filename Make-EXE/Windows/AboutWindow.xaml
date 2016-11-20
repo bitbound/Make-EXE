@@ -20,7 +20,7 @@
         <Border Margin="0,67,0,35" BorderBrush="DimGray" BorderThickness="1">
             <ScrollViewer>
                 <TextBlock TextWrapping="Wrap">
-                    <Run Text="This app helps you easily create an EXE from a PowerShell script file.  It adds 'Make EXE' as an option when right-clicking a PowerShell file in Windows Explorer."></Run>
+                    <Run Text="This app helps you easily create an EXE from a PowerShell or batch script file.  It adds 'Make EXE' as an option when right-clicking a PS/BAT script file in Windows Explorer."></Run>
                     <LineBreak></LineBreak>
                     <LineBreak></LineBreak>
                     <Run Text="Third-party libraries used: Fody/Costura"></Run>

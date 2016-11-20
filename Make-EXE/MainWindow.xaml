@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Make_EXE"
         mc:Ignorable="d"
         Title="Make EXE" Height="250" Width="300" Loaded="Window_Loaded" Icon="BuildSolution.ico">
-    <Grid Background="Black">
-        <TextBlock Foreground="White" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25">Make EXE</TextBlock>
+    <Grid Background="Black" >
+    <Image Source="Assets/gear_32xLG.png" Opacity="0.15" Margin="20"></Image>
+        <TextBlock Foreground="White" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25" FontFamily="Source Code Pro" FontWeight="Bold">Make EXE</TextBlock>
         <Button Name="buttonInfo" Background="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" Cursor="Hand" ToolTip="Info" Click="buttonInfo_Click" BorderBrush="{x:Null}">
             <Image Source="Assets/StatusHelp_grey_32xLG.png" Height="20" Width="20"></Image>
         </Button>

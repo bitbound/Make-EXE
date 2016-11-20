@@ -140,13 +140,13 @@ namespace Make_EXE
             File.Copy(Application.ResourceAssembly.ManifestModule.Assembly.Location, installedPath, true);
             buttonInstall.IsEnabled = false;
             buttonRemove.IsEnabled = true;
-            MessageBox.Show("Install completed!  Now right-click some PowerShell files!  If the 'Make EXE' option isn't showing up, reset your program defaults and reinstall Make-EXE.", "Install Completed", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Install completed!  If the 'Make EXE' option isn't showing up, reset your program defaults and reinstall Make-EXE.", "Install Completed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void buttonRemove_Click(Object sender, RoutedEventArgs e)
         {
             Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE", true);
-            var psi = new ProcessStartInfo("cmd.exe", @"/c reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f");
+            var psi = new ProcessStartInfo("cmd.exe", @"/c reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f&reg.exe delete HKCR\batfile\shell\MakeEXE /f");
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";
             var proc = Process.Start(psi);
