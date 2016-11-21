@@ -1,5 +1,5 @@
 # Make-EXE
-Easily compile your PowerShell or batch scripts into EXEs and embed data files (C# WPF).
+Easily package your PowerShell or batch scripts into EXEs and embed data files (C# WPF).
 
 ### Instructions:
 * After installing Make-EXE, there should be a "Make EXE" option when right-clicking PS1 or BAT files.
