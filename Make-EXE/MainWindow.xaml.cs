@@ -83,9 +83,9 @@ namespace Make_EXE
                     {
                         if (Path.GetExtension(file) == ".ico")
                         {
-                            compilerParams.CompilerOptions = @"/win32icon:" + file;
+                            compilerParams.CompilerOptions = "/win32icon:\"" + file + "\" /fullpaths";
                         }
-                        compilerParams.EmbeddedResources.Add(Path.GetFileName(file));
+                        compilerParams.EmbeddedResources.Add(file);
                     }
                 }
                 var fs = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Make_EXE.Maker.cs");
