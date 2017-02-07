@@ -17,9 +17,9 @@ If you select yes, all files in the same directory as the script file will be in
 You can set a custom icon for your EXE by putting the ICO file in the same directory as your script and choosing yes to embed files.  Make sure there aren't other files in the script's directory if you don't want to embed them!
 
 ### Command Line Arguments:
-Syntax: make-exe.exe [-file <path>] [-silent] [-embed]
+Syntax: make-exe.exe [-file (path)] [-silent] [-embed]
 
-Options:
-    -file   The full path to the PS1 or BAT file to be packaged.  Use quotes if there are spaces.
-    -silent   Silently package without any prompts.
-    -embed   Used with silent option to embed sibling files.
+Options:<br>
+    -file   The full path to the PS1 or BAT file to be packaged.  Use quotes if there are spaces.<br>
+    -silent   Silently package without any prompts.<br>
+    -embed   Used with silent option to embed sibling files.<br>
