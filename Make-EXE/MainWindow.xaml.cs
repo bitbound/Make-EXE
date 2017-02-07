@@ -22,16 +22,55 @@ namespace Make_EXE
     /// </summary>
     public partial class MainWindow : Window
     {
-        string[] args = Environment.GetCommandLineArgs();
+        List<string> args = new List<string>();
         string installedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE\Make-EXE.exe";
+        string targetPath;
         public MainWindow()
         {
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
-            if (args.Length > 1 && !File.Exists(args[1]))
+            foreach (var arg in Environment.GetCommandLineArgs().Skip(1))
             {
-                MessageBox.Show("The only argument you should give is the path to a PS1 file that you want to compile.", "Invalid Argument", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
-                return;
+                // If true, invalid argument was passed.
+                if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
+                {
+                    var sb = new StringBuilder();
+                    sb.AppendLine("Command Line Syntax");
+                    sb.AppendLine();
+                    sb.AppendLine("make-exe.exe [-file <path>] [-silent] [-embed]");
+                    sb.AppendLine();
+                    sb.AppendLine("Options:");
+                    sb.AppendLine("    -file   The full path to the PS1 or BAT file to be packaged.  Use quotes if there are spaces.");
+                    sb.AppendLine("    -silent   Silently package without any prompts.");
+                    sb.AppendLine("    -embed   Used with silent option to embed sibling files.");
+                    MessageBox.Show(sb.ToString(), "Make-EXE Help", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Environment.Exit(1);
+                    return;
+                }
+                // Maintain case of file name.
+                if (File.Exists(arg))
+                {
+                    args.Add(arg);
+                }
+                else
+                {
+                    args.Add(arg.ToLower());
+                }
+            }
+            if (args.Count > 0)
+            {
+                if (args.Contains("-file"))
+                {
+                    if (args.IndexOf("-file") + 1 >= args.Count || !File.Exists(args[args.IndexOf("-file") + 1]))
+                    {
+                        MessageBox.Show("The -file argument should be the full path to a PS1 or BAT file that you want to package.", "Invalid Path", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Environment.Exit(1);
+                        return;
+                    }
+                    else
+                    {
+                        targetPath = args[args.IndexOf("-file") + 1];
+                    }
+                }
             }
             InitializeComponent();
             AutoUpdater.AutoUpdater.RemoteFileURI = "https://translucency.info/Downloads/" + AutoUpdater.AutoUpdater.FileName;
@@ -42,6 +81,10 @@ namespace Make_EXE
         private void Current_DispatcherUnhandledException(Object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
+            if (args.Contains("-silent"))
+            {
+                return;
+            }
             var sb = new StringBuilder();
             sb.AppendLine("Oops.  There was an error.  Please report the below message.");
             sb.AppendLine();
@@ -60,10 +103,9 @@ namespace Make_EXE
         private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
             AutoUpdater.AutoUpdater.CheckForUpdates(true);
-            if (args.Length > 1 && File.Exists(args[1]))
+            if (targetPath != null)
             {
                 this.Hide();
-                var ask = MessageBox.Show("Embed all files in the script's folder as resources?", "Embed Files", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp");
                 var compilerParams = new System.CodeDom.Compiler.CompilerParameters();
                 compilerParams.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
@@ -74,12 +116,18 @@ namespace Make_EXE
                 compilerParams.ReferencedAssemblies.Add("System.Xml.dll");
                 compilerParams.ReferencedAssemblies.Add("System.Xml.Linq.dll");
                 compilerParams.GenerateExecutable = true;
-                compilerParams.OutputAssembly = Path.GetDirectoryName(args[1]) + @"\" + Path.GetFileNameWithoutExtension(args[1]) + ".exe";
-                
-                compilerParams.EmbeddedResources.Add(args[1]);
-                if (ask == MessageBoxResult.Yes)
+                compilerParams.OutputAssembly = Path.GetDirectoryName(targetPath) + @"\" + Path.GetFileNameWithoutExtension(targetPath) + ".exe";
+                compilerParams.EmbeddedResources.Add(targetPath);
+
+                MessageBoxResult ask = new MessageBoxResult();
+                if (!args.Contains("-silent"))
                 {
-                    foreach (var file in Directory.GetFiles(Path.GetDirectoryName(args[1])).Where(strPath => strPath != args[1]))
+                    ask = MessageBox.Show("Embed all files in the script's folder as resources?", "Embed Files", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                }
+
+                if (ask == MessageBoxResult.Yes || args.Contains("-embed"))
+                {
+                    foreach (var file in Directory.GetFiles(Path.GetDirectoryName(targetPath)).Where(strPath => strPath != targetPath))
                     {
                         if (Path.GetExtension(file) == ".ico")
                         {
@@ -93,19 +141,29 @@ namespace Make_EXE
                 fs.Close();
                 var results = provider.CompileAssemblyFromSource(compilerParams, strScript);
                 
+                if (!args.Contains("-silent"))
+                {
+                    if (results.Errors.HasErrors)
+                    {
+                        MessageBox.Show("There were errors compiling the EXE.", "Compiler Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        foreach (CompilerError error in results.Errors)
+                        {
+                            MessageBox.Show("Error: " + error.ErrorNumber + ": " + error.ErrorText + "  Column: " + error.Column + "  Line: " + error.Line);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Your EXE has been packaged!  Location: " + compilerParams.OutputAssembly, "EXE Packaged", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
                 if (results.Errors.HasErrors)
                 {
-                    MessageBox.Show("There were errors compiling the EXE.", "Compiler Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    foreach (CompilerError error in results.Errors)
-                    {
-                        MessageBox.Show("Error: " + error.ErrorNumber + ": " + error.ErrorText + "  Column: " + error.Column + "  Line: " + error.Line);
-                    }
+                    Environment.Exit(1);
                 }
                 else
                 {
-                    MessageBox.Show("Your EXE has been compiled!  Location: " + compilerParams.OutputAssembly, "EXE Compiled", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Environment.Exit(0);
                 }
-                this.Close();
             }
             else
             {
@@ -145,7 +203,15 @@ namespace Make_EXE
 
         private void buttonRemove_Click(Object sender, RoutedEventArgs e)
         {
-            Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE", true);
+            foreach (var file in Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE"))
+            {
+                File.Delete(file);
+            }
+            try
+            {
+                Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE", true);
+            }
+            catch { }
             var psi = new ProcessStartInfo("cmd.exe", @"/c reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f&reg.exe delete HKCR\batfile\shell\MakeEXE /f");
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";

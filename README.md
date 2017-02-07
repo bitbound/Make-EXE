@@ -5,7 +5,7 @@ Easily package your PowerShell or batch scripts into EXEs and embed data files (
 * After installing Make-EXE, there should be a "Make EXE" option when right-clicking PS1 or BAT files.
   * If the option is missing, reset your program defaults and reinstall Make-EXE.
   * To reset program defaults in Windows 10, go to Settings - System - Default apps.  The Reset button is at the bottom.
-* You can also use Make-EXE from the command line by supplying the path to the script as the only argument.
+* You can also use Make-EXE from the command line (options below).
 * The EXE will be created in the same directory as the script.
 
 ### Embedding Files:
@@ -15,3 +15,11 @@ If you select yes, all files in the same directory as the script file will be in
 
 ### Icons:
 You can set a custom icon for your EXE by putting the ICO file in the same directory as your script and choosing yes to embed files.  Make sure there aren't other files in the script's directory if you don't want to embed them!
+
+### Command Line Arguments:
+Syntax: make-exe.exe [-file <path>] [-silent] [-embed]
+
+Options:
+    -file   The full path to the PS1 or BAT file to be packaged.  Use quotes if there are spaces.
+    -silent   Silently package without any prompts.
+    -embed   Used with silent option to embed sibling files.
