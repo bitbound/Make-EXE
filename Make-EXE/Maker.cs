@@ -31,7 +31,7 @@ namespace Make_EXE
                     count++;
                 }
             }
-            count = 0;
+            count = 1;
             foreach (var resource in resources)
             {
                 Console.WriteLine("Extracting file " + count + " of " + resources.Length + "...");
@@ -44,6 +44,7 @@ namespace Make_EXE
                         fs.Close();
                     }
                 }
+                count++;
             }
             Console.WriteLine("Starting up...");
             if (Path.GetExtension(resources[0]).ToLower() == ".ps1")
