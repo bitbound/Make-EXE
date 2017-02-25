@@ -1,5 +1,11 @@
 ﻿using System;
 using System.IO;
+[assembly: System.Reflection.AssemblyVersion("0.0.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("0.0.0.0")]
+[assembly: System.Reflection.AssemblyProduct("")]
+[assembly: System.Reflection.AssemblyCompany("")]
+[assembly: System.Reflection.AssemblyDescription("")]
+[assembly: System.Reflection.AssemblyCopyright("")]
 namespace Make_EXE
 {
     class Program

@@ -19,11 +19,11 @@ namespace Make_EXE
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary>    
     public partial class MainWindow : Window
     {
         List<string> args = new List<string>();
-        string installedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE\Make-EXE.exe";
+        string installedPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Make-EXE\Make-EXE.exe";
         string targetPath;
         public MainWindow()
         {
@@ -99,71 +99,19 @@ namespace Make_EXE
             }
             MessageBox.Show(sb.ToString(), "Application Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
+        
         private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
             AutoUpdater.AutoUpdater.CheckForUpdates(true);
             if (targetPath != null)
             {
                 this.Hide();
-                var provider = System.CodeDom.Compiler.CodeDomProvider.CreateProvider("CSharp");
-                var compilerParams = new System.CodeDom.Compiler.CompilerParameters();
-                compilerParams.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
-                compilerParams.ReferencedAssemblies.Add("System.dll");
-                compilerParams.ReferencedAssemblies.Add("System.Core.dll");
-                compilerParams.ReferencedAssemblies.Add("System.Data.dll");
-                compilerParams.ReferencedAssemblies.Add("System.Data.DataSetExtensions.dll");
-                compilerParams.ReferencedAssemblies.Add("System.Xml.dll");
-                compilerParams.ReferencedAssemblies.Add("System.Xml.Linq.dll");
-                compilerParams.GenerateExecutable = true;
-                compilerParams.OutputAssembly = Path.GetDirectoryName(targetPath) + @"\" + Path.GetFileNameWithoutExtension(targetPath) + ".exe";
-                compilerParams.EmbeddedResources.Add(targetPath);
-
-                MessageBoxResult ask = new MessageBoxResult();
-                if (!args.Contains("-silent"))
-                {
-                    ask = MessageBox.Show("Embed all files in the script's folder as resources?", "Embed Files", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                }
-
-                if (ask == MessageBoxResult.Yes || args.Contains("-embed"))
-                {
-                    foreach (var file in Directory.GetFiles(Path.GetDirectoryName(targetPath)).Where(strPath => strPath != targetPath))
-                    {
-                        if (Path.GetExtension(file) == ".ico")
-                        {
-                            compilerParams.CompilerOptions = "/win32icon:\"" + file + "\" /fullpaths";
-                        }
-                        compilerParams.EmbeddedResources.Add(file);
-                    }
-                }
-                var fs = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("Make_EXE.Maker.cs");
-                var strScript = new StreamReader(fs).ReadToEnd();
-                fs.Close();
-                var results = provider.CompileAssemblyFromSource(compilerParams, strScript);
-                
-                if (!args.Contains("-silent"))
-                {
-                    if (results.Errors.HasErrors)
-                    {
-                        MessageBox.Show("There were errors compiling the EXE.", "Compiler Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        foreach (CompilerError error in results.Errors)
-                        {
-                            MessageBox.Show("Error: " + error.ErrorNumber + ": " + error.ErrorText + "  Column: " + error.Column + "  Line: " + error.Line);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Your EXE has been packaged!  Location: " + compilerParams.OutputAssembly, "EXE Packaged", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                }
-                if (results.Errors.HasErrors)
-                {
-                    Environment.Exit(1);
-                }
-                else
-                {
-                    Environment.Exit(0);
-                }
+                var win = new Make_EXE.Windows.AssemblyWindow();
+                win.TargetPath = targetPath;
+                win.Args = args;
+                App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+                win.Show();
+                this.Close();
             }
             else
             {
@@ -189,13 +137,11 @@ namespace Make_EXE
             reRead.Close();
             reStream.Close();
             File.WriteAllText(System.IO.Path.GetTempPath() + @"\MakeReg.reg", content);
-            var psi = new ProcessStartInfo("reg.exe", "import " + System.IO.Path.GetTempPath() + @"\MakeReg.reg");
+            var psi = new ProcessStartInfo("cmd.exe", String.Format("/c reg.exe import {0}\\MakeReg.reg&mkdir \"{1}\"&copy \"{2}\" \"{3}\" /y", Path.GetTempPath(), Path.GetDirectoryName(installedPath), Application.ResourceAssembly.ManifestModule.Assembly.Location, installedPath));
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";
             var proc = Process.Start(psi);
             proc.WaitForExit();
-            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE");
-            File.Copy(Application.ResourceAssembly.ManifestModule.Assembly.Location, installedPath, true);
             buttonInstall.IsEnabled = false;
             buttonRemove.IsEnabled = true;
             MessageBox.Show("Install completed!  If the 'Make EXE' option isn't showing up, reset your program defaults and reinstall Make-EXE.", "Install Completed", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -203,16 +149,8 @@ namespace Make_EXE
 
         private void buttonRemove_Click(Object sender, RoutedEventArgs e)
         {
-            foreach (var file in Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE"))
-            {
-                File.Delete(file);
-            }
-            try
-            {
-                Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Make-EXE", true);
-            }
-            catch { }
-            var psi = new ProcessStartInfo("cmd.exe", @"/c reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f&reg.exe delete HKCR\batfile\shell\MakeEXE /f");
+            var installedPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Make-EXE";
+            var psi = new ProcessStartInfo("cmd.exe", "/c rd \"" + installedPath + @""" /s /q&reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f&reg.exe delete HKCR\batfile\shell\MakeEXE /f");
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";
             var proc = Process.Start(psi);
