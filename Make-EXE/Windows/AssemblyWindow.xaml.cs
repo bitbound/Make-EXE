@@ -138,6 +138,7 @@ namespace Make_EXE.Windows
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
             Environment.Exit(0);
         }
     }

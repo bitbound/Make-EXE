@@ -31,7 +31,7 @@ namespace Make_EXE
             foreach (var arg in Environment.GetCommandLineArgs().Skip(1))
             {
                 // If true, invalid argument was passed.
-                if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
+                if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-wpfautoupdate" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
                 {
                     var sb = new StringBuilder();
                     sb.AppendLine("Command Line Syntax");
@@ -73,9 +73,10 @@ namespace Make_EXE
                 }
             }
             InitializeComponent();
-            WPF_Auto_Updater.Updater.RemoteFileURI = "https://translucency.info/Downloads/" + WPF_Auto_Updater.Updater.FileName;
-            WPF_Auto_Updater.Updater.ServiceURI = "https://translucency.info/Services/VersionCheck.cshtml?Path=/Downloads/" + WPF_Auto_Updater.Updater.FileName;
-            WPF_Auto_Updater.Updater.CheckCommandLineArgs();
+            WPF_Auto_Update.Updater.RemoteFileURI = "https://translucency.info/Downloads/" + WPF_Auto_Update.Updater.FileName;
+            WPF_Auto_Update.Updater.ServiceURI = "https://translucency.info/Services/VersionCheck.cshtml?Path=/Downloads/" + WPF_Auto_Update.Updater.FileName;
+            WPF_Auto_Update.Updater.UpdateTimeout = Duration.Forever;
+            WPF_Auto_Update.Updater.CheckCommandLineArgs();
         }
 
         private void Current_DispatcherUnhandledException(Object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -102,7 +103,7 @@ namespace Make_EXE
         
         private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
-            WPF_Auto_Updater.Updater.CheckForUpdates(true);
+            WPF_Auto_Update.Updater.CheckForUpdates(true);
             if (targetPath != null)
             {
                 this.Hide();
