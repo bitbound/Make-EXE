@@ -41,9 +41,6 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="AutoUpdater">
-      <HintPath>..\..\..\ClassLibraries\AutoUpdater\AutoUpdater\bin\Release\AutoUpdater.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.DynamicData" />
@@ -60,6 +57,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPF_Auto_Updater">
+      <HintPath>..\..\..\ClassLibraries\WPF Auto Updater\WPF_Auto_Updater\bin\Release\WPF_Auto_Updater.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
