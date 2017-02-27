@@ -25,7 +25,7 @@ namespace Make_EXE.Windows
         public string TargetPath { get; set; }
         public List<string> Args { get; set; }
         JavaScriptSerializer serializer = new JavaScriptSerializer();
-        AssemblyInfo jsonAssembly { get; set; }
+        AssemblyInfo jsonAssembly { get; set; } = new AssemblyInfo();
         public AssemblyWindow()
         {
             InitializeComponent();

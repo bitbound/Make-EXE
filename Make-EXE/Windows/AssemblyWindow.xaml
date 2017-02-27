@@ -19,8 +19,8 @@
         <TextBlock  Text="Copyright:" Foreground="White" FontSize="14" Margin="10,190,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <TextBlock  Text="Save Config:" Foreground="White" FontSize="14" Margin="10,230,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <CheckBox x:Name="checkEmbed" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,70,10,0" IsChecked="False"></CheckBox>
-        <TextBox x:Name="textAssemblyVersion" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,90,10,0" Width="150"></TextBox>
-        <TextBox x:Name="textFileVersion" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,110,10,0" Width="150"></TextBox>
+        <TextBox x:Name="textAssemblyVersion" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,90,10,0" Width="150" Text="0.0.0.0"></TextBox>
+        <TextBox x:Name="textFileVersion" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,110,10,0" Width="150" Text="0.0.0.0"></TextBox>
         <TextBox x:Name="textProductName" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,130,10,0" Width="150"></TextBox>
         <TextBox x:Name="textProductDescription" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,150,10,0" Width="150"></TextBox>
         <TextBox x:Name="textCompanyName" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,170,10,0" Width="150"></TextBox>
