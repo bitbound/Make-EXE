@@ -109,6 +109,10 @@ namespace Make_EXE.Windows
             strScript = strScript.Replace("[assembly: System.Reflection.AssemblyDescription(\"\")]", "[assembly: System.Reflection.AssemblyDescription(\"" + jsonAssembly.ProductDescription + "\")]");
             strScript = strScript.Replace("[assembly: System.Reflection.AssemblyCompany(\"\")]", "[assembly: System.Reflection.AssemblyCompany(\"" + jsonAssembly.CompanyName + "\")]");
             strScript = strScript.Replace("[assembly: System.Reflection.AssemblyCopyright(\"\")]", "[assembly: System.Reflection.AssemblyCopyright(\"" + jsonAssembly.Copyright + "\")]");
+            if (Args.Contains("-redirect") || checkRedirect.IsChecked == true)
+            {
+                strScript = strScript.Replace("static bool redirect = false;", "static bool redirect = true;");
+            }
             var results = provider.CompileAssemblyFromSource(compilerParams, strScript);
             if (!Args.Contains("-silent"))
             {

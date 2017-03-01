@@ -5,27 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Make_EXE.Windows"
         mc:Ignorable="d"
-        Title="Assembly Info" Height="350" Width="400" Loaded="Window_Loaded">
+        Title="Assembly Info" Height="375" Width="400" Loaded="Window_Loaded">
     <Grid Background="Black">
         <Image Source="/Make-EXE;component/Assets/gear_32xLG.png" Opacity="0.15" Margin="20"></Image>
         <TextBlock Foreground="White" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25" FontFamily="Source Code Pro" FontWeight="Bold">Assembly Info</TextBlock>
         <TextBlock  Text="Embed Files:" Foreground="White" FontSize="14" Margin="10,70,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-        <Image Margin="95,65,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="15" Width="15" Source="/Make-EXE;component/Assets/StatusHelp_grey_32xLG.png" Cursor="Help" ToolTip="Embeds all files in the same directory as your script (no sub-directories).  They will be available when the EXE is run.  If an ICO file is present, it will be used as the EXE's icon."></Image>
+        <Image Margin="95,69,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="15" Width="15" Source="/Make-EXE;component/Assets/StatusHelp_grey_32xLG.png" Cursor="Help" ToolTip="Embeds all files in the same directory as your script (no sub-directories).  They will be available when the EXE is run.  If an ICO file is present, it will be used as the EXE's icon."></Image>
         <TextBlock  Text="Assembly Version:" Foreground="White" FontSize="14" Margin="10,90,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <TextBlock  Text="File Version:" Foreground="White" FontSize="14" Margin="10,110,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <TextBlock  Text="Product Name:" Foreground="White" FontSize="14" Margin="10,130,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <TextBlock  Text="Product Description:" Foreground="White" FontSize="14" Margin="10,150,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <TextBlock  Text="Company Name:" Foreground="White" FontSize="14" Margin="10,170,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         <TextBlock  Text="Copyright:" Foreground="White" FontSize="14" Margin="10,190,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-        <TextBlock  Text="Save Config:" Foreground="White" FontSize="14" Margin="10,230,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-        <CheckBox x:Name="checkEmbed" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,70,10,0" IsChecked="False"></CheckBox>
+        <TextBlock  Text="Redirect Output:" Foreground="White" FontSize="14" Margin="10,210,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+        <Image Margin="119,210,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="15" Width="15" Source="/Make-EXE;component/Assets/StatusHelp_grey_32xLG.png" Cursor="Help" ToolTip="This forces all output from the embedded script to be redirected to the calling process.  Only use this if the EXE will not be run interactively in the user's session (i.e. deployed in the background)."></Image>
+        <TextBlock  Text="Save Config:" Foreground="White" FontSize="14" Margin="10,250,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkEmbed" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,72,10,0" IsChecked="False"></CheckBox>
         <TextBox x:Name="textAssemblyVersion" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,90,10,0" Width="150" Text="0.0.0.0"></TextBox>
         <TextBox x:Name="textFileVersion" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,110,10,0" Width="150" Text="0.0.0.0"></TextBox>
         <TextBox x:Name="textProductName" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,130,10,0" Width="150"></TextBox>
         <TextBox x:Name="textProductDescription" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,150,10,0" Width="150"></TextBox>
         <TextBox x:Name="textCompanyName" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,170,10,0" Width="150"></TextBox>
         <TextBox x:Name="textCopyright" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,190,10,0" Width="150"></TextBox>
-        <CheckBox x:Name="checkSave" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,230,10,0" IsChecked="True"></CheckBox>
+        <CheckBox x:Name="checkRedirect" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,214,10,0" IsChecked="False"></CheckBox>
+        <CheckBox x:Name="checkSave" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,254,10,0" IsChecked="True"></CheckBox>
         <Button x:Name="buttonMake" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,80,10" Width="60" Height="35" FontWeight="Bold" Click="buttonMake_Click">Make</Button>
         <Button x:Name="buttonCancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Width="40" Height="25" Click="buttonCancel_Click">Cancel</Button>
     </Grid>

@@ -31,17 +31,18 @@ namespace Make_EXE
             foreach (var arg in Environment.GetCommandLineArgs().Skip(1))
             {
                 // If true, invalid argument was passed.
-                if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-wpfautoupdate" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
+                if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-redirect" && arg.ToLower() != "-wpfautoupdate" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
                 {
                     var sb = new StringBuilder();
                     sb.AppendLine("Command Line Syntax");
                     sb.AppendLine();
-                    sb.AppendLine("make-exe.exe [-file <path>] [-silent] [-embed]");
+                    sb.AppendLine("make-exe.exe [-file <path>] [-silent] [-embed] [-redirect]");
                     sb.AppendLine();
                     sb.AppendLine("Options:");
                     sb.AppendLine("    -file   The full path to the PS1 or BAT file to be packaged.  Use quotes if there are spaces.");
                     sb.AppendLine("    -silent   Silently package without any prompts.");
                     sb.AppendLine("    -embed   Used with silent option to embed sibling files.");
+                    sb.AppendLine("    - redirect   Redirect all output from the script to the calling EXE process.");
                     MessageBox.Show(sb.ToString(), "Make-EXE Help", MessageBoxButton.OK, MessageBoxImage.Information);
                     Environment.Exit(1);
                     return;
