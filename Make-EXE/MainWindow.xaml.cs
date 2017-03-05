@@ -28,7 +28,15 @@ namespace Make_EXE
         public MainWindow()
         {
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            var cleanArgs = new List<string>();
             foreach (var arg in Environment.GetCommandLineArgs().Skip(1))
+            {
+                foreach (var splitArg in arg.Split(' '))
+                {
+                    cleanArgs.Add(splitArg);
+                }
+            }
+            foreach (var arg in cleanArgs)
             {
                 // If true, invalid argument was passed.
                 if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-redirect" && arg.ToLower() != "-wpfautoupdate" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
