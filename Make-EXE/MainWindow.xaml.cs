@@ -31,7 +31,7 @@ namespace Make_EXE
             foreach (var arg in Environment.GetCommandLineArgs().Skip(1))
             {
                 // If true, invalid argument was passed.
-                if (arg.ToLower() != "-file" && arg.ToLower() != "-silent" && arg.ToLower() != "-redirect" && arg.ToLower() != "-wpfautoupdate" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
+                if (!arg.ToLower().StartsWith("-file") && arg.ToLower() != "-silent" && arg.ToLower() != "-redirect" && arg.ToLower() != "-wpfautoupdate" && arg.ToLower() != "-embed" && !File.Exists(arg.ToLower()))
                 {
                     var sb = new StringBuilder();
                     sb.AppendLine("Command Line Syntax");
@@ -47,8 +47,13 @@ namespace Make_EXE
                     Environment.Exit(1);
                     return;
                 }
+                if (arg.ToLower().StartsWith("-file") && arg.Length > 5)
+                {
+                    args.Add("-file");
+                    args.Add(arg.Substring(5));
+                }
                 // Maintain case of file name.
-                if (File.Exists(arg))
+                else if (File.Exists(arg))
                 {
                     args.Add(arg);
                 }
