@@ -1,5 +1,5 @@
 # Make-EXE
-Easily package your PowerShell or batch scripts into EXEs and embed data files.
+Easily package your PowerShell or batch scripts into EXEs and embed resource files.
 
 ### Instructions:
 * After installing Make-EXE, there should be a "Make EXE" option when right-clicking PS1 or BAT files.
