@@ -1,11 +1,11 @@
-﻿<Window x:Class="Make_EXE.Windows.AboutWindow"
+<Window x:Class="Make_EXE.Windows.AboutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Make_EXE.Windows"
         mc:Ignorable="d"
-        Title="About Make EXE" Height="275" Width="300">
+        Title="About Make EXE" Height="275" Width="350">
     <Grid Margin="10">
         <TextBlock Text="Make EXE" FontWeight="Bold" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0">
@@ -14,7 +14,7 @@
         </TextBlock>
         <TextBlock Margin="0,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
             <TextBlock>Translucency (</TextBlock>
-            <Hyperlink Click="Hyperlink_Click">https://translucency.info</Hyperlink>
+            <Hyperlink Click="Hyperlink_Click">https://translucency.azurewebsites.net</Hyperlink>
             <TextBlock>)</TextBlock>
         </TextBlock>
         <Border Margin="0,67,0,35" BorderBrush="DimGray" BorderThickness="1">

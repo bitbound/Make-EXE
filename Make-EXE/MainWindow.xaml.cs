@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -79,8 +79,8 @@ namespace Make_EXE
                 }
             }
             InitializeComponent();
-            WPF_Auto_Update.Updater.RemoteFileURI = "https://translucency.info/Downloads/" + WPF_Auto_Update.Updater.FileName;
-            WPF_Auto_Update.Updater.ServiceURI = "https://translucency.info/Services/VersionCheck.cshtml?Path=/Downloads/" + WPF_Auto_Update.Updater.FileName;
+            WPF_Auto_Update.Updater.RemoteFileURI = "https://translucency.azurewebsites.net/Downloads/" + WPF_Auto_Update.Updater.FileName;
+            WPF_Auto_Update.Updater.ServiceURI = "https://translucency.azurewebsites.net/Services/VersionCheck.cshtml?Path=/Downloads/" + WPF_Auto_Update.Updater.FileName;
             WPF_Auto_Update.Updater.UpdateTimeout = Duration.Forever;
             WPF_Auto_Update.Updater.CheckCommandLineArgs();
         }
