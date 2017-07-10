@@ -147,11 +147,15 @@ namespace Make_EXE
             var psi = new ProcessStartInfo("cmd.exe", String.Format("/c reg.exe import {0}\\MakeReg.reg&mkdir \"{1}\"&copy \"{2}\" \"{3}\" /y", Path.GetTempPath(), Path.GetDirectoryName(installedPath), Application.ResourceAssembly.ManifestModule.Assembly.Location, installedPath));
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";
-            var proc = Process.Start(psi);
-            proc.WaitForExit();
-            buttonInstall.IsEnabled = false;
-            buttonRemove.IsEnabled = true;
-            MessageBox.Show("Install completed!  If the 'Make EXE' option isn't showing up, reset your program defaults and reinstall Make-EXE.", "Install Completed", MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                var proc = Process.Start(psi);
+                proc.WaitForExit();
+                buttonInstall.IsEnabled = false;
+                buttonRemove.IsEnabled = true;
+                MessageBox.Show("Install completed!  If the 'Make EXE' option isn't showing up, reset your program defaults and reinstall Make-EXE.", "Install Completed", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch { }
         }
 
         private void buttonRemove_Click(Object sender, RoutedEventArgs e)
@@ -160,11 +164,15 @@ namespace Make_EXE
             var psi = new ProcessStartInfo("cmd.exe", "/c rd \"" + installedPath + @""" /s /q&reg.exe delete HKCR\.ps1\shell\MakeEXE /f&reg.exe delete HKCR\Microsoft.PowerShellScript.1\Shell\MakeEXE /f&reg.exe delete HKCR\Applications\powershell_ise.exe\shell\MakeEXE /f&reg.exe delete HKCR\batfile\shell\MakeEXE /f");
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.Verb = "runas";
-            var proc = Process.Start(psi);
-            proc.WaitForExit();
-            MessageBox.Show("Make EXE has been removed.", "Uninstall Completed", MessageBoxButton.OK, MessageBoxImage.Information);
-            buttonInstall.IsEnabled = true;
-            buttonRemove.IsEnabled = false;
+            try
+            {
+                var proc = Process.Start(psi);
+                proc.WaitForExit();
+                buttonInstall.IsEnabled = true;
+                buttonRemove.IsEnabled = false;
+                MessageBox.Show("Make EXE has been removed.", "Uninstall Completed", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch { }
         }
 
         private void buttonInfo_Click(Object sender, RoutedEventArgs e)
