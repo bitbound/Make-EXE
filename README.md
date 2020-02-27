@@ -1,7 +1,7 @@
 # Make-EXE
 Easily package your PowerShell or batch scripts into EXEs and embed resource files.
 
-> Some day, when I have spare time, I'll refactor all this to use proper MVVM architecture.  Maybe even throw in some unit tests.  But until then, I know it's bad.
+> Some day, when I have spare time, I'll refactor all this to use proper MVVM architecture.  Maybe even throw in some unit tests.  But until then, I know it's bad.  I was but a wee little programmer back when I created this.
 
 ### Instructions:
 * After installing Make-EXE, there should be a "Make EXE" option when right-clicking PS1 or BAT files.
